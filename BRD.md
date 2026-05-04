@@ -134,13 +134,88 @@ The dashboard consolidates data from MOFA, the Insurance Authority (IA), the Min
 | Payment Processors | Fee collection, payment status |
 | VCC Card Platform | Virtual card transaction and health telemetry |
 
-## 9. Key Metrics (KPI Catalog)
+## 9. Key Metrics (KPI Catalog) — Definitions & Formulas
 
-Operational: Packages Submitted, Pending, Rejected, Cancellation Rate.
-Visa & Insurance: Visas Issued, Visa Pending, Insurance Policies Issued.
-Financial: Fees Collected (SAR), Total Package Value, Accommodation Value, Flight Value, Average Package Value, Revenue (Active DMCs).
-Partner: Active / Inactive DMCs, Completion Rate by DMC, Revenue Contribution.
-Mobility: Travelers Entered, Exited, Currently In-Country, Overstay Alerts, Avg Cancellation Time.
+All sums apply the active filter context (date range, DMC, nationality, city, payment status, hotel class). Δ% denotes period-over-period change vs. the immediately preceding period of equal length.
+
+### 9.1 Universal Helpers
+
+- **Period-over-period delta (%)**: `Δ% = (Current_Period_Value − Previous_Period_Value) / Previous_Period_Value × 100`
+- **Filtered set P**: the set of packages matching all active filters.
+- **Filtered set T**: the set of travelers matching all active filters.
+
+### 9.2 Overview KPIs
+
+| KPI | Formula |
+|---|---|
+| Total Packages Submitted | `COUNT(p ∈ P WHERE p.status ≠ 'Draft')` |
+| Total Visas Issued | `SUM(p.travelers WHERE p.visa_status = 'Issued')` |
+| Total Fees Collected (SAR) | `SUM(p.gov_fees + p.processing_fees WHERE p.payment_status = 'Paid')` |
+| Insurance Policies Issued | `COUNT(policy WHERE policy.status = 'Issued' AND policy.package_id ∈ P)` |
+| Packages Pending | `COUNT(p ∈ P WHERE p.status ∈ {'Received','Validated','Fees Paid','Processing'})` |
+| Packages Rejected | `COUNT(p ∈ P WHERE p.status = 'Rejected')` |
+| Total DMCs | `COUNT(DISTINCT p.dmc_id WHERE p ∈ P)` |
+| Cancellation Rate (%) | `(Packages_Cancelled / Total_Packages_Submitted) × 100` |
+
+### 9.3 Packages & Financials KPIs
+
+| KPI | Formula |
+|---|---|
+| Total Package Value (SAR) | `SUM(p.hotel_price + p.flight_price + p.visa_fees + p.processing_fees + p.insurance_fees + p.gov_fees)` |
+| Accommodation Value (SAR) | `SUM(p.hotel_price)` |
+| Flight Value (SAR) | `SUM(p.flight_price)` |
+| Average Package Value (SAR) | `Total_Package_Value / COUNT(p ∈ P)` |
+| Daily Submission Volume | `COUNT(p ∈ P WHERE DATE(p.submitted_at) = D)` for each day D in last 30 days |
+| Revenue Trend (Monthly) | `SUM(p.gov_fees + p.processing_fees WHERE p.payment_status='Paid' AND MONTH(p.paid_at)=M)` |
+
+### 9.4 Visa & Insurance KPIs
+
+| KPI | Formula |
+|---|---|
+| Visas Issued (MOFA) | `COUNT(visa WHERE visa.status='Issued' AND visa.source='MOFA')` |
+| Visa Pending | `COUNT(visa WHERE visa.status ∈ {'Submitted','Under Review','Awaiting Documents'})` |
+| Insurance Policies Issued (IA) | `COUNT(policy WHERE policy.status='Issued' AND policy.source='IA')` |
+| Validation Pass Rate (%) | `(Validated / (Validated + Rejected)) × 100` |
+| Rejection Rate (%) | `Rejected / Total_Submitted × 100` |
+| Government Fees Total (SAR) | `Σ_i (fee_unit_price_i × billable_units_i)` across all fee types |
+| Visa Duration Distribution | For each bucket b: `COUNT(visa WHERE visa.duration_days ∈ b) / COUNT(visa) × 100` |
+
+### 9.5 DMC Performance KPIs
+
+| KPI | Formula |
+|---|---|
+| Active DMCs | `COUNT(DISTINCT dmc WHERE dmc.status='Active' AND ∃ p ∈ P WHERE p.dmc=dmc within period)` |
+| Inactive DMCs | `COUNT(dmc WHERE dmc.status='Inactive') OR (no submissions within period)` |
+| Total Packages (Active DMCs) | `COUNT(p ∈ P WHERE p.dmc.status='Active')` |
+| Revenue (Active DMCs) (SAR) | `SUM(p.gov_fees + p.processing_fees WHERE p.dmc.status='Active' AND p.payment_status='Paid')` |
+| Completion Rate by DMC (%) | `(Packages_Completed_DMC / Total_Packages_DMC) × 100` |
+| Revenue Contribution by DMC (%) | `Revenue_DMC / Total_Revenue × 100` |
+| DMC Leaderboard Rank | `RANK() OVER (ORDER BY (Packages_Completed_DMC × w₁ + Revenue_DMC × w₂ + Completion_Rate_DMC × w₃) DESC)` |
+
+### 9.6 Entry & Cancellations KPIs
+
+| KPI | Formula |
+|---|---|
+| Travelers Entered KSA | `COUNT(traveler WHERE traveler.entry_timestamp BETWEEN period_start AND period_end)` |
+| Travelers Exited KSA | `COUNT(traveler WHERE traveler.exit_timestamp BETWEEN period_start AND period_end)` |
+| Currently In-Country | `Travelers_Entered_All_Time − Travelers_Exited_All_Time` (filtered to active visas) |
+| Overstay Alerts | `COUNT(traveler WHERE traveler.exit_timestamp IS NULL AND TODAY > traveler.visa_expiry_date)` |
+| Package Cancellations | `COUNT(p ∈ P WHERE p.status='Cancelled')` |
+| Traveler Cancellations | `SUM(p.travelers_cancelled WHERE p ∈ P)` |
+| Overall Cancellation Rate (%) | `(Package_Cancellations / Total_Packages_Submitted) × 100` |
+| Average Cancellation Time | `AVG(p.cancelled_at − p.submitted_at WHERE p.status='Cancelled')` (in hours or days) |
+| Entry by Port (share %) | `COUNT(traveler WHERE traveler.port_of_entry = X) / Total_Travelers_Entered × 100` |
+| Weekly Entry vs Exit | `COUNT(entry WHERE WEEK(entry.timestamp)=W)` and `COUNT(exit WHERE WEEK(exit.timestamp)=W)` |
+
+### 9.7 Integration Health KPIs
+
+| KPI | Formula |
+|---|---|
+| MOFA Uptime (%) | `(Successful_API_Calls / Total_API_Calls) × 100` over rolling 24h |
+| IA Uptime (%) | `(Successful_Policy_Issuances / Attempted_Policy_Issuances) × 100` over rolling 24h |
+| VCC Card Health Score | `(Successful_Transactions / Total_Transactions) × 100 − (Declined_Rate × penalty)` |
+| Average Visa Processing Time | `AVG(visa.issued_at − visa.submitted_at)` in hours |
+| Average Insurance Issuance Time | `AVG(policy.issued_at − policy.requested_at)` in seconds/minutes |
 
 ## 10. Assumptions
 
