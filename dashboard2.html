@@ -1209,17 +1209,18 @@ const D = {
     {n:'Rawafed Travel',    sub:'Taif',   pkgs:9,  rev:'0.013M', reason:'Account suspended',      since:'2026-03-05', action:'Resolve compliance issue'},
     {n:'Dar Al-Salam Tours',sub:'Abha',   pkgs:6,  rev:'0.009M', reason:'VCC expired',            since:'2026-03-08', action:'Renew VCC via HyperPay'},
   ],
+  /* Keys mirror MTOTAeVisa DB columns (PACKAGE_MASTER + VISA_APP_* tables) */
   pkgs:[
-    {id:'PKG-2026-004827',dmc:'Almosafer',  n:4,nat:'Indian',    city:'Riyadh',s:5,d:7, hotelP:'14,800',flightP:'9,200', visaF:'1,200',procF:'157',insF:'380', val:'28,400',fee:'1,736',st:'completed', dt:'2026-03-10',hotel:'Ritz-Carlton Riyadh',   dep:'Saudia (SV)',    arr:'Saudia (SV)',   ins:'Tawuniya'},
-    {id:'PKG-2026-004826',dmc:'Wego',       n:2,nat:'Indonesian',city:'AlUla', s:5,d:10,hotelP:'7,400', flightP:'4,800', visaF:'600',  procF:'79', insF:'190', val:'14,200',fee:'868',  st:'processing', dt:'2026-03-10',hotel:'Rosewood AlUla',        dep:'Emirates (EK)',  arr:'Emirates (EK)', ins:'Bupa Arabia'},
-    {id:'PKG-2026-004825',dmc:'Seera Group',n:6,nat:'Pakistani', city:'Jeddah',s:4,d:14,hotelP:'21,600',flightP:'14,400',visaF:'1,800',procF:'236',insF:'570', val:'42,600',fee:'2,604',st:'completed', dt:'2026-03-09',hotel:'Four Seasons Jeddah',    dep:'flynas (XY)',    arr:'Saudia (SV)',   ins:'MedGulf'},
-    {id:'PKG-2026-004824',dmc:'Tajawal',    n:3,nat:'Egyptian',  city:'Abha',  s:4,d:7, hotelP:'9,200', flightP:'5,600', visaF:'900',  procF:'118',insF:'285', val:'18,000',fee:'1,302',st:'validated', dt:'2026-03-09',hotel:'InterContinental Abha', dep:'Qatar Airways',  arr:'flyadeal (F3)', ins:'Walaa Insurance'},
-    {id:'PKG-2026-004823',dmc:'Flyin.com',  n:1,nat:'British',   city:'Riyadh',s:5,d:5, hotelP:'3,200', flightP:'2,400', visaF:'300',  procF:'39', insF:'95',  val:'7,200', fee:'434',  st:'paid',       dt:'2026-03-08',hotel:'Fairmont Riyadh',       dep:'British Airways',arr:'Saudia (SV)',   ins:'Tawuniya'},
-    {id:'PKG-2026-004822',dmc:'Almosafer',  n:5,nat:'Malaysian', city:'Taif',  s:4,d:14,hotelP:'16,800',flightP:'11,200',visaF:'1,500',procF:'197',insF:'475', val:'32,500',fee:'2,170',st:'completed', dt:'2026-03-08',hotel:'Marriott Riyadh',        dep:'Malaysia AL',    arr:'flynas (XY)',   ins:'GIG Gulf'},
-    {id:'PKG-2026-004821',dmc:'Al Tayyar', n:2,nat:'American',  city:'Riyadh',s:5,d:3, hotelP:'7,200', flightP:'6,800', visaF:'600',  procF:'79', insF:'190', val:'16,000',fee:'868',  st:'rejected',   dt:'2026-03-07',hotel:'Hilton Riyadh',          dep:'United (UA)',    arr:'Saudia (SV)',   ins:'Tawuniya'},
-    {id:'PKG-2026-004820',dmc:'Seera Group',n:4,nat:'Bangladeshi',city:'Dammam',s:4,d:7,hotelP:'11,400',flightP:'7,800', visaF:'1,200',procF:'157',insF:'380', val:'24,000',fee:'1,736',st:'cancelled',  dt:'2026-03-07',hotel:'Park Hyatt Jeddah',      dep:'Biman (BG)',     arr:'flynas (XY)',   ins:'MedGulf'},
-    {id:'PKG-2026-004819',dmc:'Wego',       n:3,nat:'Indian',    city:'Jeddah',s:5,d:10,hotelP:'10,200',flightP:'6,600', visaF:'900',  procF:'118',insF:'285', val:'19,800',fee:'1,302',st:'completed', dt:'2026-03-06',hotel:'Hyatt Regency Jeddah',   dep:'Air India (AI)', arr:'Emirates (EK)', ins:'Bupa Arabia'},
-    {id:'PKG-2026-004818',dmc:'Tajawal',    n:2,nat:'Pakistani', city:'AlUla', s:4,d:21,hotelP:'5,800', flightP:'3,400', visaF:'600',  procF:'79', insF:'190', val:'11,400',fee:'868',  st:'processing', dt:'2026-03-06',hotel:'Anantara AlUla',         dep:'Turkish (TK)',   arr:'Saudia (SV)',   ins:'Al-Etihad Coop.'},
+    {PACKAGE_ID:'PKG-2026-004827',DMC_NAME_EN:'Almosafer',  TOTAL_TRAVELERS_COUNT:4,NATIONALITY_NAME:'Indian',    CITY:'Riyadh',HOTEL_CLASSIFICATION:5,PACKAGE_DURATION:7, HOTEL_PRICE:'14,800',FLIGHT_PRICE:'9,200', VISA_FEE:'1,200',PROCESSING_FEE:'157',INSURANCE_FEE:'380', TOTAL_PACKAGE_PRICE:'28,400',GOV_FEES:'1,736',PACKAGE_STATUS:'completed', CREATEDTIMESTAMP:'2026-03-10',HOTEL_NAME:'Ritz-Carlton Riyadh',   DEPARTURE_CARRIER:'Saudia (SV)',    ARRIVAL_CARRIER:'Saudia (SV)',   INSURANCE_PROVIDER:'Tawuniya'},
+    {PACKAGE_ID:'PKG-2026-004826',DMC_NAME_EN:'Wego',       TOTAL_TRAVELERS_COUNT:2,NATIONALITY_NAME:'Indonesian',CITY:'AlUla', HOTEL_CLASSIFICATION:5,PACKAGE_DURATION:10,HOTEL_PRICE:'7,400', FLIGHT_PRICE:'4,800', VISA_FEE:'600',  PROCESSING_FEE:'79', INSURANCE_FEE:'190', TOTAL_PACKAGE_PRICE:'14,200',GOV_FEES:'868',  PACKAGE_STATUS:'processing',CREATEDTIMESTAMP:'2026-03-10',HOTEL_NAME:'Rosewood AlUla',        DEPARTURE_CARRIER:'Emirates (EK)',  ARRIVAL_CARRIER:'Emirates (EK)', INSURANCE_PROVIDER:'Bupa Arabia'},
+    {PACKAGE_ID:'PKG-2026-004825',DMC_NAME_EN:'Seera Group',TOTAL_TRAVELERS_COUNT:6,NATIONALITY_NAME:'Pakistani', CITY:'Jeddah',HOTEL_CLASSIFICATION:4,PACKAGE_DURATION:14,HOTEL_PRICE:'21,600',FLIGHT_PRICE:'14,400',VISA_FEE:'1,800',PROCESSING_FEE:'236',INSURANCE_FEE:'570', TOTAL_PACKAGE_PRICE:'42,600',GOV_FEES:'2,604',PACKAGE_STATUS:'completed', CREATEDTIMESTAMP:'2026-03-09',HOTEL_NAME:'Four Seasons Jeddah',    DEPARTURE_CARRIER:'flynas (XY)',    ARRIVAL_CARRIER:'Saudia (SV)',   INSURANCE_PROVIDER:'MedGulf'},
+    {PACKAGE_ID:'PKG-2026-004824',DMC_NAME_EN:'Tajawal',    TOTAL_TRAVELERS_COUNT:3,NATIONALITY_NAME:'Egyptian',  CITY:'Abha',  HOTEL_CLASSIFICATION:4,PACKAGE_DURATION:7, HOTEL_PRICE:'9,200', FLIGHT_PRICE:'5,600', VISA_FEE:'900',  PROCESSING_FEE:'118',INSURANCE_FEE:'285', TOTAL_PACKAGE_PRICE:'18,000',GOV_FEES:'1,302',PACKAGE_STATUS:'validated', CREATEDTIMESTAMP:'2026-03-09',HOTEL_NAME:'InterContinental Abha', DEPARTURE_CARRIER:'Qatar Airways',  ARRIVAL_CARRIER:'flyadeal (F3)', INSURANCE_PROVIDER:'Walaa Insurance'},
+    {PACKAGE_ID:'PKG-2026-004823',DMC_NAME_EN:'Flyin.com',  TOTAL_TRAVELERS_COUNT:1,NATIONALITY_NAME:'British',   CITY:'Riyadh',HOTEL_CLASSIFICATION:5,PACKAGE_DURATION:5, HOTEL_PRICE:'3,200', FLIGHT_PRICE:'2,400', VISA_FEE:'300',  PROCESSING_FEE:'39', INSURANCE_FEE:'95',  TOTAL_PACKAGE_PRICE:'7,200', GOV_FEES:'434',  PACKAGE_STATUS:'paid',      CREATEDTIMESTAMP:'2026-03-08',HOTEL_NAME:'Fairmont Riyadh',       DEPARTURE_CARRIER:'British Airways',ARRIVAL_CARRIER:'Saudia (SV)',   INSURANCE_PROVIDER:'Tawuniya'},
+    {PACKAGE_ID:'PKG-2026-004822',DMC_NAME_EN:'Almosafer',  TOTAL_TRAVELERS_COUNT:5,NATIONALITY_NAME:'Malaysian', CITY:'Taif',  HOTEL_CLASSIFICATION:4,PACKAGE_DURATION:14,HOTEL_PRICE:'16,800',FLIGHT_PRICE:'11,200',VISA_FEE:'1,500',PROCESSING_FEE:'197',INSURANCE_FEE:'475', TOTAL_PACKAGE_PRICE:'32,500',GOV_FEES:'2,170',PACKAGE_STATUS:'completed', CREATEDTIMESTAMP:'2026-03-08',HOTEL_NAME:'Marriott Riyadh',        DEPARTURE_CARRIER:'Malaysia AL',    ARRIVAL_CARRIER:'flynas (XY)',   INSURANCE_PROVIDER:'GIG Gulf'},
+    {PACKAGE_ID:'PKG-2026-004821',DMC_NAME_EN:'Al Tayyar',  TOTAL_TRAVELERS_COUNT:2,NATIONALITY_NAME:'American',  CITY:'Riyadh',HOTEL_CLASSIFICATION:5,PACKAGE_DURATION:3, HOTEL_PRICE:'7,200', FLIGHT_PRICE:'6,800', VISA_FEE:'600',  PROCESSING_FEE:'79', INSURANCE_FEE:'190', TOTAL_PACKAGE_PRICE:'16,000',GOV_FEES:'868',  PACKAGE_STATUS:'rejected',  CREATEDTIMESTAMP:'2026-03-07',HOTEL_NAME:'Hilton Riyadh',          DEPARTURE_CARRIER:'United (UA)',    ARRIVAL_CARRIER:'Saudia (SV)',   INSURANCE_PROVIDER:'Tawuniya'},
+    {PACKAGE_ID:'PKG-2026-004820',DMC_NAME_EN:'Seera Group',TOTAL_TRAVELERS_COUNT:4,NATIONALITY_NAME:'Bangladeshi',CITY:'Dammam',HOTEL_CLASSIFICATION:4,PACKAGE_DURATION:7,HOTEL_PRICE:'11,400',FLIGHT_PRICE:'7,800', VISA_FEE:'1,200',PROCESSING_FEE:'157',INSURANCE_FEE:'380', TOTAL_PACKAGE_PRICE:'24,000',GOV_FEES:'1,736',PACKAGE_STATUS:'cancelled', CREATEDTIMESTAMP:'2026-03-07',HOTEL_NAME:'Park Hyatt Jeddah',      DEPARTURE_CARRIER:'Biman (BG)',     ARRIVAL_CARRIER:'flynas (XY)',   INSURANCE_PROVIDER:'MedGulf'},
+    {PACKAGE_ID:'PKG-2026-004819',DMC_NAME_EN:'Wego',       TOTAL_TRAVELERS_COUNT:3,NATIONALITY_NAME:'Indian',    CITY:'Jeddah',HOTEL_CLASSIFICATION:5,PACKAGE_DURATION:10,HOTEL_PRICE:'10,200',FLIGHT_PRICE:'6,600', VISA_FEE:'900',  PROCESSING_FEE:'118',INSURANCE_FEE:'285', TOTAL_PACKAGE_PRICE:'19,800',GOV_FEES:'1,302',PACKAGE_STATUS:'completed', CREATEDTIMESTAMP:'2026-03-06',HOTEL_NAME:'Hyatt Regency Jeddah',   DEPARTURE_CARRIER:'Air India (AI)', ARRIVAL_CARRIER:'Emirates (EK)', INSURANCE_PROVIDER:'Bupa Arabia'},
+    {PACKAGE_ID:'PKG-2026-004818',DMC_NAME_EN:'Tajawal',    TOTAL_TRAVELERS_COUNT:2,NATIONALITY_NAME:'Pakistani', CITY:'AlUla', HOTEL_CLASSIFICATION:4,PACKAGE_DURATION:21,HOTEL_PRICE:'5,800', FLIGHT_PRICE:'3,400', VISA_FEE:'600',  PROCESSING_FEE:'79', INSURANCE_FEE:'190', TOTAL_PACKAGE_PRICE:'11,400',GOV_FEES:'868',  PACKAGE_STATUS:'processing',CREATEDTIMESTAMP:'2026-03-06',HOTEL_NAME:'Anantara AlUla',         DEPARTURE_CARRIER:'Turkish (TK)',   ARRIVAL_CARRIER:'Saudia (SV)',   INSURANCE_PROVIDER:'Al-Etihad Coop.'},
   ],
   vcc:[
     {en:'Active VCC Cards',        ar:'بطاقات نشطة',        v:41,   c:B.g1},
@@ -1470,26 +1471,26 @@ function renderPkgTable(){
   const ba={completed:'مكتملة',processing:'قيد المعالجة',validated:'تم التحقق',received:'مستلمة',rejected:'مرفوضة',cancelled:'ملغاة',paid:'تم السداد'};
   el.innerHTML=D.pkgs.map(r=>`
     <tr>
-      <td><span class="ptbl-id">${r.id}</span></td>
-      <td class="ptbl-td">${r.dmc}</td>
-      <td class="ptbl-td" style="text-align:center">${r.n}</td>
-      <td class="ptbl-td">${r.nat}</td>
-      <td class="ptbl-td">${r.city}</td>
-      <td class="ptbl-td" style="max-width:140px;white-space:normal;line-height:1.3;font-size:11px">${r.hotel}</td>
-      <td class="ptbl-td" style="text-align:center">${'★'.repeat(r.s)}</td>
-      <td class="ptbl-td" style="text-align:center">${r.d}d</td>
-      <td class="ptbl-td" style="font-size:11px">${r.dep}</td>
-      <td class="ptbl-td" style="font-size:11px">${r.arr}</td>
-      <td class="ptbl-td" style="font-size:11px;color:var(--p2)">${r.ins}</td>
-      <td class="ptbl-val" style="color:var(--t1)">${r.hotelP} SAR</td>
-      <td class="ptbl-val" style="color:var(--p2)">${r.flightP} SAR</td>
-      <td style="font-size:11px;font-weight:600;color:var(--s-info)">${r.visaF} SAR</td>
-      <td style="font-size:11px;font-weight:600;color:var(--s-warn)">${r.procF} SAR</td>
-      <td style="font-size:11px;font-weight:600;color:var(--p2)">${r.insF} SAR</td>
-      <td class="ptbl-fee">${r.fee} SAR</td>
-      <td class="ptbl-val">${r.val} SAR</td>
-      <td><span class="badge ${bm[r.st]}"><span class="en-text">${be[r.st]}</span><span class="ar-text">${ba[r.st]}</span></span></td>
-      <td style="color:var(--tx3)">${r.dt}</td>
+      <td><span class="ptbl-id">${r.PACKAGE_ID}</span></td>
+      <td class="ptbl-td">${r.DMC_NAME_EN}</td>
+      <td class="ptbl-td" style="text-align:center">${r.TOTAL_TRAVELERS_COUNT}</td>
+      <td class="ptbl-td">${r.NATIONALITY_NAME}</td>
+      <td class="ptbl-td">${r.CITY}</td>
+      <td class="ptbl-td" style="max-width:140px;white-space:normal;line-height:1.3;font-size:11px">${r.HOTEL_NAME}</td>
+      <td class="ptbl-td" style="text-align:center">${'★'.repeat(r.HOTEL_CLASSIFICATION)}</td>
+      <td class="ptbl-td" style="text-align:center">${r.PACKAGE_DURATION}d</td>
+      <td class="ptbl-td" style="font-size:11px">${r.DEPARTURE_CARRIER}</td>
+      <td class="ptbl-td" style="font-size:11px">${r.ARRIVAL_CARRIER}</td>
+      <td class="ptbl-td" style="font-size:11px;color:var(--p2)">${r.INSURANCE_PROVIDER}</td>
+      <td class="ptbl-val" style="color:var(--t1)">${r.HOTEL_PRICE} SAR</td>
+      <td class="ptbl-val" style="color:var(--p2)">${r.FLIGHT_PRICE} SAR</td>
+      <td style="font-size:11px;font-weight:600;color:var(--s-info)">${r.VISA_FEE} SAR</td>
+      <td style="font-size:11px;font-weight:600;color:var(--s-warn)">${r.PROCESSING_FEE} SAR</td>
+      <td style="font-size:11px;font-weight:600;color:var(--p2)">${r.INSURANCE_FEE} SAR</td>
+      <td class="ptbl-fee">${r.GOV_FEES} SAR</td>
+      <td class="ptbl-val">${r.TOTAL_PACKAGE_PRICE} SAR</td>
+      <td><span class="badge ${bm[r.PACKAGE_STATUS]}"><span class="en-text">${be[r.PACKAGE_STATUS]}</span><span class="ar-text">${ba[r.PACKAGE_STATUS]}</span></span></td>
+      <td style="color:var(--tx3)">${r.CREATEDTIMESTAMP}</td>
     </tr>`).join('');
 }
 
