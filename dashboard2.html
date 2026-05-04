@@ -1109,7 +1109,56 @@ const B = {
 };
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-/* ── DATA ──────────────────────────────────────── */
+/* ── DATA ──────────────────────────────────────────────────────────
+   Parameters mapped to MTOTAeVisa real database (MTOTAeVisa_DatabaseDetails.xlsx).
+   Databases: OTAEVisa_ESB · OTAEVisa_App_Attachments · OTAEVisa_ESB_Logs
+
+   D.statuses        ← PACKAGE_MASTER.PACKAGE_STATUS
+   D.countries       ← NATIONALITY (NATIONALITY_CODE, NATIONALITY_NAME)
+   D.cities          ← CITY (CITY_CODE, CITY_NAME) · accommodation via VISA_APP_ACCOMMODATION_DATA.CITY
+   D.fees            ← TOURISM_PACKAGE_PAYMENT_REQUEST / _CONFIRMATION (PAYMENT_METHOD, SERVICE_TYPE, AMOUNT)
+   D.dmcs            ← DMC (DMC_RECORDID, DMC_NAME_EN, COUNTRY_CODE, STATUS, IS_QUALIFIED)
+                       PACKAGE_MASTER aggregated by DMC_RECORDID
+   D.inactiveDmcs    ← DMC.STATUS != active  ·  OTA_DMC_CREDITCARDDETAILS (EXPIRY_DATE, STATUS)
+   D.pkgs            ← PACKAGE_MASTER joined with VISA_APP_PERSONALDETAILS, VISA_APP_ACCOMMODATION_DATA,
+                       VISA_APP_FLIGHT_DATA, VISA_APP_INSURANCE, VISA_APP_PACKAGE_REQUEST_DATA
+       id      → PACKAGE_MASTER.PACKAGE_ID
+       dmc     → DMC.DMC_NAME_EN (via DMC_RECORDID)
+       n       → PACKAGE_MASTER.TOTAL_TRAVELERS_COUNT
+       nat     → VISA_APP_PERSONALDETAILS.NATIONALITY → NATIONALITY.NATIONALITY_NAME
+       city    → VISA_APP_ACCOMMODATION_DATA.CITY → CITY.CITY_NAME
+       s       → VISA_APP_ACCOMMODATION_DATA.HOTEL_CLASSIFICATION
+       d       → VISA_APP_PACKAGE_REQUEST_DATA.PACKAGE_DURATION
+       hotelP  → VISA_APP_ACCOMMODATION_DATA.HOTEL_PRICE
+       flightP → VISA_APP_FLIGHT_DATA.FLIGHT_PRICE
+       visaF   → TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT (SERVICE_TYPE = visa issuance)
+       procF   → TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT (SERVICE_TYPE = visa processing)
+       insF    → TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT (SERVICE_TYPE = insurance policy)
+       val     → PACKAGE_MASTER.TOTAL_PACKAGE_PRICE
+       fee     → SUM of government fees per package
+       st      → PACKAGE_MASTER.PACKAGE_STATUS
+       dt      → PACKAGE_MASTER.CREATEDTIMESTAMP
+       hotel   → HOTEL.HOTEL_NAME (via VISA_APP_ACCOMMODATION_DATA.LICENSE_NO)
+       dep     → DEPARTURE_CARRIER.CARRIER_NAME (via VISA_APP_FLIGHT_DATA.DEPARTURE_CARRIER)
+       arr     → ARRIVAL_CARRIER.CARRIER_NAME (via VISA_APP_FLIGHT_DATA.ARRIVAL_CARRIER)
+       ins     → VISA_APP_INSURANCE policy provider
+   D.vcc             ← OTA_DMC_CREDITCARDDETAILS (STATUS, EXPIRY_DATE, EXPIRY_REMINDER_COUNT)
+   D.validations     ← PACKAGE_MASTER.VALIDATION_STATUS · OTA_APPLICATION_PROCESSING_STG.APP_STATUS
+   D.cancelR         ← VISA_APP_CANCELLATION (CANCELLATIONREASON, FE_CANCELLATION_STATUS, ERRORCODE)
+   D.overstays       ← VISA_APP_MOFA (VISA_EXPIRYDATE, VISA_USAGE_STATUS) joined with VISA_APP_PERSONALDETAILS,
+                       VISA_APP_PASSPORTRAVEL, VISA_APP_FLIGHT_DATA
+       pkgId       → PACKAGE_ID
+       traveler.id → APPLICATION_NO
+       passport    → VISA_APP_PASSPORTRAVEL.PASSPORTNUMBER
+       entry       → VISA_APP_FLIGHT_DATA.ARRIVAL_FLIGHT_DATE
+       visaExp     → VISA_APP_MOFA.VISA_EXPIRYDATE
+   D.mofa            ← VISA_APP_MOFA (VALIDATION_STATUS, VISA_ISSUANCE_STATUS)
+   D.ia              ← VISA_APP_INSURANCE.POLICY_STATUS
+   D.hotels          ← HOTEL (HOTEL_CODE, HOTEL_NAME) aggregated via VISA_APP_ACCOMMODATION_DATA
+   D.carriers        ← ARRIVAL_CARRIER / DEPARTURE_CARRIER aggregated via VISA_APP_FLIGHT_DATA
+   D.insurers        ← VISA_APP_INSURANCE policy-provider aggregation
+   D.pkgComp         ← PACKAGE_MASTER monthly aggregates (HOTEL_PRICE, FLIGHT_PRICE, fees)
+   ──────────────────────────────────────────────────────────────── */
 const D = {
   timeline:{
     sub:[0,210,380,490,620,710,840,920,760,810,690,397],
