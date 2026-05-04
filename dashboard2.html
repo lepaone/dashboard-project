@@ -1193,21 +1193,23 @@ const D = {
     {en:'Visa Processing Fee',  ar:'رسم معالجة التأشيرة', per:'Traveler',tot:'438,477'},
     {en:'Ministry Admin Fee',   ar:'رسم وزارة السياحة',   per:'Package', tot:'0'},
   ],
+  /* Keys mirror DMC + PACKAGE_MASTER columns */
   dmcs:[
-    {n:'Almosafer Travel',sub:'Riyadh', pkgs:847,done:811,rev:'1.24M',active:true},
-    {n:'Seera Group',     sub:'Riyadh', pkgs:712,done:698,rev:'1.04M',active:true},
-    {n:'Wego',            sub:'Riyadh', pkgs:634,done:601,rev:'0.93M',active:true},
-    {n:'Tajawal',         sub:'Jeddah', pkgs:521,done:499,rev:'0.76M',active:true},
-    {n:'Flyin.com',       sub:'Jeddah', pkgs:418,done:390,rev:'0.61M',active:true},
-    {n:'Al Tayyar Group', sub:'Riyadh', pkgs:312,done:298,rev:'0.46M',active:true},
-    {n:'Abercrombie KSA', sub:'AlUla',  pkgs:201,done:187,rev:'0.29M',active:true},
+    {DMC_NAME_EN:'Almosafer Travel',CITY:'Riyadh', PACKAGES_COUNT:847,COMPLETED_COUNT:811,REVENUE:'1.24M',STATUS:'active'},
+    {DMC_NAME_EN:'Seera Group',     CITY:'Riyadh', PACKAGES_COUNT:712,COMPLETED_COUNT:698,REVENUE:'1.04M',STATUS:'active'},
+    {DMC_NAME_EN:'Wego',            CITY:'Riyadh', PACKAGES_COUNT:634,COMPLETED_COUNT:601,REVENUE:'0.93M',STATUS:'active'},
+    {DMC_NAME_EN:'Tajawal',         CITY:'Jeddah', PACKAGES_COUNT:521,COMPLETED_COUNT:499,REVENUE:'0.76M',STATUS:'active'},
+    {DMC_NAME_EN:'Flyin.com',       CITY:'Jeddah', PACKAGES_COUNT:418,COMPLETED_COUNT:390,REVENUE:'0.61M',STATUS:'active'},
+    {DMC_NAME_EN:'Al Tayyar Group', CITY:'Riyadh', PACKAGES_COUNT:312,COMPLETED_COUNT:298,REVENUE:'0.46M',STATUS:'active'},
+    {DMC_NAME_EN:'Abercrombie KSA', CITY:'AlUla',  PACKAGES_COUNT:201,COMPLETED_COUNT:187,REVENUE:'0.29M',STATUS:'active'},
   ],
+  /* DMC.STATUS != 'active' joined with OTA_DMC_CREDITCARDDETAILS */
   inactiveDmcs:[
-    {n:'Arabian Horizons',  sub:'Jeddah', pkgs:38, rev:'0.056M', reason:'VCC expired',            since:'2026-02-14', action:'Renew VCC via HyperPay'},
-    {n:'Nusuk Travel',      sub:'Riyadh', pkgs:21, rev:'0.031M', reason:'API integration failed', since:'2026-02-28', action:'Contact technical support'},
-    {n:'GulfTours KSA',     sub:'Dammam', pkgs:14, rev:'0.020M', reason:'License renewal pending',since:'2026-03-01', action:'Submit renewed MoT license'},
-    {n:'Rawafed Travel',    sub:'Taif',   pkgs:9,  rev:'0.013M', reason:'Account suspended',      since:'2026-03-05', action:'Resolve compliance issue'},
-    {n:'Dar Al-Salam Tours',sub:'Abha',   pkgs:6,  rev:'0.009M', reason:'VCC expired',            since:'2026-03-08', action:'Renew VCC via HyperPay'},
+    {DMC_NAME_EN:'Arabian Horizons',  CITY:'Jeddah', PACKAGES_COUNT:38, REVENUE:'0.056M', STATUS_REASON:'VCC expired',            SINCE:'2026-02-14', ACTION_REQUIRED:'Renew VCC via HyperPay'},
+    {DMC_NAME_EN:'Nusuk Travel',      CITY:'Riyadh', PACKAGES_COUNT:21, REVENUE:'0.031M', STATUS_REASON:'API integration failed', SINCE:'2026-02-28', ACTION_REQUIRED:'Contact technical support'},
+    {DMC_NAME_EN:'GulfTours KSA',     CITY:'Dammam', PACKAGES_COUNT:14, REVENUE:'0.020M', STATUS_REASON:'License renewal pending',SINCE:'2026-03-01', ACTION_REQUIRED:'Submit renewed MoT license'},
+    {DMC_NAME_EN:'Rawafed Travel',    CITY:'Taif',   PACKAGES_COUNT:9,  REVENUE:'0.013M', STATUS_REASON:'Account suspended',      SINCE:'2026-03-05', ACTION_REQUIRED:'Resolve compliance issue'},
+    {DMC_NAME_EN:'Dar Al-Salam Tours',CITY:'Abha',   PACKAGES_COUNT:6,  REVENUE:'0.009M', STATUS_REASON:'VCC expired',            SINCE:'2026-03-08', ACTION_REQUIRED:'Renew VCC via HyperPay'},
   ],
   /* Keys mirror MTOTAeVisa DB columns (PACKAGE_MASTER + VISA_APP_* tables) */
   pkgs:[
@@ -1241,38 +1243,40 @@ const D = {
     {en:'MOFA integration error',ar:'خطأ تقني',        pct:18,c:B.w},
     {en:'Insurance failure (IA)',ar:'فشل التأمين',      pct:12,c:B.i},
   ],
+  /* VISA_APP_MOFA (VISA_EXPIRYDATE) joined with VISA_APP_PERSONALDETAILS,
+     VISA_APP_PASSPORTRAVEL, VISA_APP_FLIGHT_DATA, VISA_APP_ACCOMMODATION_DATA, DMC */
   overstays:[
-    {pkgId:'PKG-2026-003841',dmc:'Almosafer Travel',  dmcPhone:'+966-11-234-5678',dmcEmail:'ops@almosafer.com',
+    {PACKAGE_ID:'PKG-2026-003841',DMC_NAME_EN:'Almosafer Travel', DMC_PHONE:'+966-11-234-5678',DMC_EMAIL:'ops@almosafer.com',
      travelers:[
-       {id:'TRV-2026-019201',name:'Ravi Kumar',  nat:'🇮🇳 Indian',   passport:'K8821045',entry:'2026-02-10',visaExp:'2026-02-25',overDays:13},
-       {id:'TRV-2026-019202',name:'Priya Kumar', nat:'🇮🇳 Indian',   passport:'K8821046',entry:'2026-02-10',visaExp:'2026-02-25',overDays:13},
-     ],city:'Riyadh',hotel:'Ritz-Carlton Riyadh',visaType:'15-day'},
-    {pkgId:'PKG-2026-003614',dmc:'Wego',              dmcPhone:'+966-11-876-5432',dmcEmail:'support@wego.com',
+       {APPLICATION_NO:'TRV-2026-019201',NAME:'Ravi Kumar',  NATIONALITY_NAME:'🇮🇳 Indian',   PASSPORTNUMBER:'K8821045',ARRIVAL_FLIGHT_DATE:'2026-02-10',VISA_EXPIRYDATE:'2026-02-25',OVERSTAY_DAYS:13},
+       {APPLICATION_NO:'TRV-2026-019202',NAME:'Priya Kumar', NATIONALITY_NAME:'🇮🇳 Indian',   PASSPORTNUMBER:'K8821046',ARRIVAL_FLIGHT_DATE:'2026-02-10',VISA_EXPIRYDATE:'2026-02-25',OVERSTAY_DAYS:13},
+     ],CITY:'Riyadh',HOTEL_NAME:'Ritz-Carlton Riyadh',VISA_TYPE:'15-day'},
+    {PACKAGE_ID:'PKG-2026-003614',DMC_NAME_EN:'Wego',             DMC_PHONE:'+966-11-876-5432',DMC_EMAIL:'support@wego.com',
      travelers:[
-       {id:'TRV-2026-017801',name:'Ahmad Fauzi', nat:'🇮🇩 Indonesian',passport:'A7741209',entry:'2026-02-18',visaExp:'2026-03-05',overDays:7},
-     ],city:'Jeddah',hotel:'Hyatt Regency Jeddah',visaType:'15-day'},
-    {pkgId:'PKG-2026-003502',dmc:'Seera Group',       dmcPhone:'+966-11-345-6789',dmcEmail:'operations@seera.sa',
+       {APPLICATION_NO:'TRV-2026-017801',NAME:'Ahmad Fauzi', NATIONALITY_NAME:'🇮🇩 Indonesian',PASSPORTNUMBER:'A7741209',ARRIVAL_FLIGHT_DATE:'2026-02-18',VISA_EXPIRYDATE:'2026-03-05',OVERSTAY_DAYS:7},
+     ],CITY:'Jeddah',HOTEL_NAME:'Hyatt Regency Jeddah',VISA_TYPE:'15-day'},
+    {PACKAGE_ID:'PKG-2026-003502',DMC_NAME_EN:'Seera Group',      DMC_PHONE:'+966-11-345-6789',DMC_EMAIL:'operations@seera.sa',
      travelers:[
-       {id:'TRV-2026-016901',name:'Muhammad Tariq',nat:'🇵🇰 Pakistani',passport:'BP4421901',entry:'2026-02-20',visaExp:'2026-03-07',overDays:5},
-       {id:'TRV-2026-016902',name:'Fatima Tariq',  nat:'🇵🇰 Pakistani',passport:'BP4421902',entry:'2026-02-20',visaExp:'2026-03-07',overDays:5},
-       {id:'TRV-2026-016903',name:'Zain Tariq',    nat:'🇵🇰 Pakistani',passport:'BP4421903',entry:'2026-02-20',visaExp:'2026-03-07',overDays:5},
-     ],city:'Jeddah',hotel:'Four Seasons Jeddah',visaType:'15-day'},
-    {pkgId:'PKG-2026-003388',dmc:'Tajawal',           dmcPhone:'+966-12-567-8901',dmcEmail:'help@tajawal.com',
+       {APPLICATION_NO:'TRV-2026-016901',NAME:'Muhammad Tariq',NATIONALITY_NAME:'🇵🇰 Pakistani',PASSPORTNUMBER:'BP4421901',ARRIVAL_FLIGHT_DATE:'2026-02-20',VISA_EXPIRYDATE:'2026-03-07',OVERSTAY_DAYS:5},
+       {APPLICATION_NO:'TRV-2026-016902',NAME:'Fatima Tariq',  NATIONALITY_NAME:'🇵🇰 Pakistani',PASSPORTNUMBER:'BP4421902',ARRIVAL_FLIGHT_DATE:'2026-02-20',VISA_EXPIRYDATE:'2026-03-07',OVERSTAY_DAYS:5},
+       {APPLICATION_NO:'TRV-2026-016903',NAME:'Zain Tariq',    NATIONALITY_NAME:'🇵🇰 Pakistani',PASSPORTNUMBER:'BP4421903',ARRIVAL_FLIGHT_DATE:'2026-02-20',VISA_EXPIRYDATE:'2026-03-07',OVERSTAY_DAYS:5},
+     ],CITY:'Jeddah',HOTEL_NAME:'Four Seasons Jeddah',VISA_TYPE:'15-day'},
+    {PACKAGE_ID:'PKG-2026-003388',DMC_NAME_EN:'Tajawal',          DMC_PHONE:'+966-12-567-8901',DMC_EMAIL:'help@tajawal.com',
      travelers:[
-       {id:'TRV-2026-015401',name:'Omar Hassan', nat:'🇪🇬 Egyptian', passport:'A09821334',entry:'2026-02-22',visaExp:'2026-03-09',overDays:3},
-     ],city:'Abha',hotel:'InterContinental Abha',visaType:'15-day'},
-    {pkgId:'PKG-2026-003201',dmc:'Flyin.com',         dmcPhone:'+966-12-678-9012',dmcEmail:'ops@flyin.com',
+       {APPLICATION_NO:'TRV-2026-015401',NAME:'Omar Hassan', NATIONALITY_NAME:'🇪🇬 Egyptian', PASSPORTNUMBER:'A09821334',ARRIVAL_FLIGHT_DATE:'2026-02-22',VISA_EXPIRYDATE:'2026-03-09',OVERSTAY_DAYS:3},
+     ],CITY:'Abha',HOTEL_NAME:'InterContinental Abha',VISA_TYPE:'15-day'},
+    {PACKAGE_ID:'PKG-2026-003201',DMC_NAME_EN:'Flyin.com',        DMC_PHONE:'+966-12-678-9012',DMC_EMAIL:'ops@flyin.com',
      travelers:[
-       {id:'TRV-2026-014101',name:'James Wilson', nat:'🇬🇧 British',  passport:'531274018',entry:'2026-02-25',visaExp:'2026-03-11',overDays:1},
-       {id:'TRV-2026-014102',name:'Sarah Wilson', nat:'🇬🇧 British',  passport:'531274019',entry:'2026-02-25',visaExp:'2026-03-11',overDays:1},
-     ],city:'Riyadh',hotel:'Fairmont Riyadh',visaType:'15-day'},
-    {pkgId:'PKG-2026-002974',dmc:'Al Tayyar Group',   dmcPhone:'+966-11-789-0123',dmcEmail:'contact@altayyar.com',
+       {APPLICATION_NO:'TRV-2026-014101',NAME:'James Wilson', NATIONALITY_NAME:'🇬🇧 British',  PASSPORTNUMBER:'531274018',ARRIVAL_FLIGHT_DATE:'2026-02-25',VISA_EXPIRYDATE:'2026-03-11',OVERSTAY_DAYS:1},
+       {APPLICATION_NO:'TRV-2026-014102',NAME:'Sarah Wilson', NATIONALITY_NAME:'🇬🇧 British',  PASSPORTNUMBER:'531274019',ARRIVAL_FLIGHT_DATE:'2026-02-25',VISA_EXPIRYDATE:'2026-03-11',OVERSTAY_DAYS:1},
+     ],CITY:'Riyadh',HOTEL_NAME:'Fairmont Riyadh',VISA_TYPE:'15-day'},
+    {PACKAGE_ID:'PKG-2026-002974',DMC_NAME_EN:'Al Tayyar Group',  DMC_PHONE:'+966-11-789-0123',DMC_EMAIL:'contact@altayyar.com',
      travelers:[
-       {id:'TRV-2026-012801',name:'Karim El-Sayed', nat:'🇪🇬 Egyptian',passport:'A08712290',entry:'2026-02-01',visaExp:'2026-03-03',overDays:9},
-       {id:'TRV-2026-012802',name:'Nour El-Sayed',  nat:'🇪🇬 Egyptian',passport:'A08712291',entry:'2026-02-01',visaExp:'2026-03-03',overDays:9},
-       {id:'TRV-2026-012803',name:'Lina El-Sayed',  nat:'🇪🇬 Egyptian',passport:'A08712292',entry:'2026-02-01',visaExp:'2026-03-03',overDays:9},
-       {id:'TRV-2026-012804',name:'Yassin El-Sayed',nat:'🇪🇬 Egyptian',passport:'A08712293',entry:'2026-02-01',visaExp:'2026-03-03',overDays:9},
-     ],city:'Dammam',hotel:'Radisson Dammam',visaType:'30-day'},
+       {APPLICATION_NO:'TRV-2026-012801',NAME:'Karim El-Sayed', NATIONALITY_NAME:'🇪🇬 Egyptian',PASSPORTNUMBER:'A08712290',ARRIVAL_FLIGHT_DATE:'2026-02-01',VISA_EXPIRYDATE:'2026-03-03',OVERSTAY_DAYS:9},
+       {APPLICATION_NO:'TRV-2026-012802',NAME:'Nour El-Sayed',  NATIONALITY_NAME:'🇪🇬 Egyptian',PASSPORTNUMBER:'A08712291',ARRIVAL_FLIGHT_DATE:'2026-02-01',VISA_EXPIRYDATE:'2026-03-03',OVERSTAY_DAYS:9},
+       {APPLICATION_NO:'TRV-2026-012803',NAME:'Lina El-Sayed',  NATIONALITY_NAME:'🇪🇬 Egyptian',PASSPORTNUMBER:'A08712292',ARRIVAL_FLIGHT_DATE:'2026-02-01',VISA_EXPIRYDATE:'2026-03-03',OVERSTAY_DAYS:9},
+       {APPLICATION_NO:'TRV-2026-012804',NAME:'Yassin El-Sayed',NATIONALITY_NAME:'🇪🇬 Egyptian',PASSPORTNUMBER:'A08712293',ARRIVAL_FLIGHT_DATE:'2026-02-01',VISA_EXPIRYDATE:'2026-03-03',OVERSTAY_DAYS:9},
+     ],CITY:'Dammam',HOTEL_NAME:'Radisson Dammam',VISA_TYPE:'30-day'},
   ],
   mofa:[
     {en:'Submitted to MOFA',pct:92,c:B.g1},
@@ -1286,26 +1290,29 @@ const D = {
     {en:'Policy Pending',  pct:8, c:B.w},
     {en:'Policy Failed',   pct:5, c:B.r},
   ],
+  /* HOTEL.HOTEL_NAME aggregated via VISA_APP_ACCOMMODATION_DATA */
   hotels:[
-    {n:'Ritz-Carlton Riyadh',   pkgs:412},{n:'Rosewood AlUla',       pkgs:388},
-    {n:'Four Seasons Jeddah',   pkgs:354},{n:'Park Hyatt Jeddah',    pkgs:301},
-    {n:'Marriott Riyadh',       pkgs:278},{n:'Hilton Riyadh',        pkgs:241},
-    {n:'Anantara AlUla',        pkgs:219},{n:'Fairmont Riyadh',      pkgs:198},
-    {n:'InterContinental Abha', pkgs:175},{n:'Hyatt Regency Jeddah', pkgs:161},
+    {HOTEL_NAME:'Ritz-Carlton Riyadh',   PACKAGES_COUNT:412},{HOTEL_NAME:'Rosewood AlUla',       PACKAGES_COUNT:388},
+    {HOTEL_NAME:'Four Seasons Jeddah',   PACKAGES_COUNT:354},{HOTEL_NAME:'Park Hyatt Jeddah',    PACKAGES_COUNT:301},
+    {HOTEL_NAME:'Marriott Riyadh',       PACKAGES_COUNT:278},{HOTEL_NAME:'Hilton Riyadh',        PACKAGES_COUNT:241},
+    {HOTEL_NAME:'Anantara AlUla',        PACKAGES_COUNT:219},{HOTEL_NAME:'Fairmont Riyadh',      PACKAGES_COUNT:198},
+    {HOTEL_NAME:'InterContinental Abha', PACKAGES_COUNT:175},{HOTEL_NAME:'Hyatt Regency Jeddah', PACKAGES_COUNT:161},
   ],
+  /* ARRIVAL_CARRIER / DEPARTURE_CARRIER aggregated via VISA_APP_FLIGHT_DATA */
   carriers:[
-    {n:'Saudia (SV)',        pkgs:1842},{n:'flynas (XY)',          pkgs:976},
-    {n:'Emirates (EK)',      pkgs:621}, {n:'Qatar Airways (QR)',   pkgs:504},
-    {n:'flyadeal (F3)',      pkgs:398}, {n:'Turkish Airlines (TK)',pkgs:284},
-    {n:'Air Arabia (G9)',    pkgs:202},
+    {CARRIER_NAME:'Saudia (SV)',        PACKAGES_COUNT:1842},{CARRIER_NAME:'flynas (XY)',          PACKAGES_COUNT:976},
+    {CARRIER_NAME:'Emirates (EK)',      PACKAGES_COUNT:621}, {CARRIER_NAME:'Qatar Airways (QR)',   PACKAGES_COUNT:504},
+    {CARRIER_NAME:'flyadeal (F3)',      PACKAGES_COUNT:398}, {CARRIER_NAME:'Turkish Airlines (TK)',PACKAGES_COUNT:284},
+    {CARRIER_NAME:'Air Arabia (G9)',    PACKAGES_COUNT:202},
   ],
+  /* VISA_APP_INSURANCE policy-provider aggregation */
   insurers:[
-    {n:'Tawuniya',             ar:'التعاونية',          policies:3210,pct:29},
-    {n:'Bupa Arabia',          ar:'بوبا العربية',        policies:2640,pct:24},
-    {n:'MedGulf',              ar:'ميدغلف',              policies:1965,pct:18},
-    {n:'Walaa Insurance',      ar:'ولاء للتأمين',        policies:1530,pct:14},
-    {n:'GIG Gulf',             ar:'جي آي جي الخليج',     policies:874, pct:8},
-    {n:'Al-Etihad Cooperative',ar:'الاتحاد التعاونية',   policies:699, pct:6},
+    {INSURER_NAME:'Tawuniya',             INSURER_NAME_AR:'التعاونية',          POLICIES_COUNT:3210,PCT:29},
+    {INSURER_NAME:'Bupa Arabia',          INSURER_NAME_AR:'بوبا العربية',        POLICIES_COUNT:2640,PCT:24},
+    {INSURER_NAME:'MedGulf',              INSURER_NAME_AR:'ميدغلف',              POLICIES_COUNT:1965,PCT:18},
+    {INSURER_NAME:'Walaa Insurance',      INSURER_NAME_AR:'ولاء للتأمين',        POLICIES_COUNT:1530,PCT:14},
+    {INSURER_NAME:'GIG Gulf',             INSURER_NAME_AR:'جي آي جي الخليج',     POLICIES_COUNT:874, PCT:8},
+    {INSURER_NAME:'Al-Etihad Cooperative',INSURER_NAME_AR:'الاتحاد التعاونية',   POLICIES_COUNT:699, PCT:6},
   ],
   pkgComp:{
     accom: [0,18200,34100,42600,53800,62400,73800,82400,67200,71400,60800,34400],
@@ -1386,10 +1393,10 @@ function renderDMC(){
   el.innerHTML=D.dmcs.map((d,i)=>`
     <div class="dmc-row">
       <div class="rank-badge ${rk[i]}">${i+1}</div>
-      <div class="dmc-info"><div class="dmc-name">${d.n}</div><div class="dmc-sub">${d.sub} · ${d.pkgs} packages</div></div>
+      <div class="dmc-info"><div class="dmc-name">${d.DMC_NAME_EN}</div><div class="dmc-sub">${d.CITY} · ${d.PACKAGES_COUNT} packages</div></div>
       <div class="dmc-stats">
-        <div class="dmc-stat"><div class="dmc-stat-val" style="color:${B.g1}">${d.done}</div><div class="dmc-stat-key">completed</div></div>
-        <div class="dmc-stat"><div class="dmc-stat-val" style="color:${B.t2}">${d.rev}</div><div class="dmc-stat-key">SAR</div></div>
+        <div class="dmc-stat"><div class="dmc-stat-val" style="color:${B.g1}">${d.COMPLETED_COUNT}</div><div class="dmc-stat-key">completed</div></div>
+        <div class="dmc-stat"><div class="dmc-stat-val" style="color:${B.t2}">${d.REVENUE}</div><div class="dmc-stat-key">SAR</div></div>
       </div>
     </div>`).join('');
 }
@@ -1398,8 +1405,8 @@ function renderDMCComp(){
   const el=document.getElementById('dmcCompEl'); if(!el)return;
   const cols=[B.g1,B.t2,B.p2,B.w,B.i,B.r,B.g3];
   el.innerHTML=D.dmcs.map((d,i)=>{
-    const pct=Math.round(d.done/d.pkgs*100);
-    return `<div class="hbl-row"><div class="hbl-label" style="font-size:11px">${d.n}</div><div class="hbl-track"><div class="hbl-fill" style="width:${pct}%;background:${cols[i]}"></div></div><div class="hbl-val">${pct}%</div></div>`;
+    const pct=Math.round(d.COMPLETED_COUNT/d.PACKAGES_COUNT*100);
+    return `<div class="hbl-row"><div class="hbl-label" style="font-size:11px">${d.DMC_NAME_EN}</div><div class="hbl-track"><div class="hbl-fill" style="width:${pct}%;background:${cols[i]}"></div></div><div class="hbl-val">${pct}%</div></div>`;
   }).join('');
 }
 
@@ -1427,13 +1434,13 @@ function renderActiveDmcTable(){
   const el=document.getElementById('activeDmcTblEl'); if(!el)return;
   const rk=['🥇','🥈','🥉','4','5','6','7'];
   el.innerHTML=D.dmcs.map((d,i)=>{
-    const pct=Math.round(d.done/d.pkgs*100);
+    const pct=Math.round(d.COMPLETED_COUNT/d.PACKAGES_COUNT*100);
     return `<tr>
       <td style="text-align:center;font-size:15px">${rk[i]||i+1}</td>
-      <td class="ptbl-val">${d.n}</td>
-      <td class="ptbl-td">${d.sub}</td>
-      <td class="ptbl-td" style="text-align:center;font-weight:700;color:var(--g1)">${d.pkgs.toLocaleString()}</td>
-      <td class="ptbl-td" style="text-align:center;color:var(--s-success)">${d.done.toLocaleString()}</td>
+      <td class="ptbl-val">${d.DMC_NAME_EN}</td>
+      <td class="ptbl-td">${d.CITY}</td>
+      <td class="ptbl-td" style="text-align:center;font-weight:700;color:var(--g1)">${d.PACKAGES_COUNT.toLocaleString()}</td>
+      <td class="ptbl-td" style="text-align:center;color:var(--s-success)">${d.COMPLETED_COUNT.toLocaleString()}</td>
       <td style="min-width:120px">
         <div style="display:flex;align-items:center;gap:6px">
           <div style="flex:1;height:6px;background:var(--srf3);border-radius:3px;overflow:hidden">
@@ -1442,7 +1449,7 @@ function renderActiveDmcTable(){
           <span style="font-size:11px;font-weight:700;color:var(--g1);min-width:32px">${pct}%</span>
         </div>
       </td>
-      <td class="ptbl-fee">${d.rev} SAR</td>
+      <td class="ptbl-fee">${d.REVENUE} SAR</td>
       <td><span class="badge b-completed">Active</span></td>
     </tr>`;
   }).join('');
@@ -1453,13 +1460,13 @@ function renderInactiveDmcTable(){
   const reasonColor={'VCC expired':B.r,'API integration failed':B.w,'License renewal pending':B.w,'Account suspended':B.r};
   el.innerHTML=D.inactiveDmcs.map(d=>`
     <tr>
-      <td class="ptbl-val">${d.n}</td>
-      <td class="ptbl-td">${d.sub}</td>
-      <td class="ptbl-td" style="text-align:center">${d.pkgs}</td>
-      <td class="ptbl-td">${d.rev} SAR</td>
-      <td style="font-size:11px;color:${reasonColor[d.reason]||B.r};font-weight:600">${d.reason}</td>
-      <td style="color:var(--tx3);font-size:11px">${d.since}</td>
-      <td style="font-size:11px;font-weight:500">${d.action}</td>
+      <td class="ptbl-val">${d.DMC_NAME_EN}</td>
+      <td class="ptbl-td">${d.CITY}</td>
+      <td class="ptbl-td" style="text-align:center">${d.PACKAGES_COUNT}</td>
+      <td class="ptbl-td">${d.REVENUE} SAR</td>
+      <td style="font-size:11px;color:${reasonColor[d.STATUS_REASON]||B.r};font-weight:600">${d.STATUS_REASON}</td>
+      <td style="color:var(--tx3);font-size:11px">${d.SINCE}</td>
+      <td style="font-size:11px;font-weight:500">${d.ACTION_REQUIRED}</td>
       <td><span class="badge b-rejected">Inactive</span></td>
     </tr>`).join('');
 }
@@ -1507,41 +1514,41 @@ function renderVCC(){
 (function renderOverstay(){
   const data=D.overstays; if(!data||!data.length)return;
   const totalTrav=data.reduce((s,p)=>s+p.travelers.length,0);
-  const maxDays=Math.max(...data.flatMap(p=>p.travelers.map(t=>t.overDays)));
+  const maxDays=Math.max(...data.flatMap(p=>p.travelers.map(t=>t.OVERSTAY_DAYS)));
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
   set('osTotalTrav',totalTrav);
   set('osTotalPkg', data.length);
-  set('osTotalDmc', new Set(data.map(p=>p.dmc)).size);
+  set('osTotalDmc', new Set(data.map(p=>p.DMC_NAME_EN)).size);
   set('osMaxDays',  maxDays+'d');
   const wrap=document.getElementById('overstayListEl'); if(!wrap)return;
   wrap.innerHTML=data.map(pkg=>{
     const tRows=pkg.travelers.map(t=>{
-      const cls=t.overDays>=10?'crit':t.overDays>=5?'':'warn';
+      const cls=t.OVERSTAY_DAYS>=10?'crit':t.OVERSTAY_DAYS>=5?'':'warn';
       return `<tr>
-        <td style="font-weight:600">${t.name}</td>
-        <td>${t.nat}</td>
-        <td><span class="os-passport">${t.passport}</span></td>
-        <td><span style="font-family:'Courier New',monospace;font-size:11px;color:#1a5490">${t.id}</span></td>
-        <td>${t.entry}</td>
-        <td>${t.visaExp}</td>
-        <td><span class="os-days ${cls}">${t.overDays}d over</span></td>
+        <td style="font-weight:600">${t.NAME}</td>
+        <td>${t.NATIONALITY_NAME}</td>
+        <td><span class="os-passport">${t.PASSPORTNUMBER}</span></td>
+        <td><span style="font-family:'Courier New',monospace;font-size:11px;color:#1a5490">${t.APPLICATION_NO}</span></td>
+        <td>${t.ARRIVAL_FLIGHT_DATE}</td>
+        <td>${t.VISA_EXPIRYDATE}</td>
+        <td><span class="os-days ${cls}">${t.OVERSTAY_DAYS}d over</span></td>
       </tr>`;
     }).join('');
     return `<div class="os-card">
       <div class="os-card-hdr">
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-          <span class="os-pkg-id">${pkg.pkgId}</span>
-          <span class="os-dmc">🏢 ${pkg.dmc}</span>
-          <span class="os-city">📍 ${pkg.city}</span>
-          <span class="os-hotel">🏨 ${pkg.hotel}</span>
+          <span class="os-pkg-id">${pkg.PACKAGE_ID}</span>
+          <span class="os-dmc">🏢 ${pkg.DMC_NAME_EN}</span>
+          <span class="os-city">📍 ${pkg.CITY}</span>
+          <span class="os-hotel">🏨 ${pkg.HOTEL_NAME}</span>
           <span style="font-size:11px;background:#ffeaea;color:#b83232;padding:2px 8px;border-radius:10px;font-weight:700">
             ${pkg.travelers.length} traveler(s) overstaying
           </span>
         </div>
         <div class="os-contact">
           <span style="font-size:11px;color:#666;font-weight:600">Contact DMC:</span>
-          <a class="os-contact-btn email" href="mailto:${pkg.dmcEmail}">✉️ ${pkg.dmcEmail}</a>
-          <a class="os-contact-btn phone" href="tel:${pkg.dmcPhone}">📞 ${pkg.dmcPhone}</a>
+          <a class="os-contact-btn email" href="mailto:${pkg.DMC_EMAIL}">✉️ ${pkg.DMC_EMAIL}</a>
+          <a class="os-contact-btn phone" href="tel:${pkg.DMC_PHONE}">📞 ${pkg.DMC_PHONE}</a>
         </div>
       </div>
       <div style="overflow-x:auto">
@@ -1561,13 +1568,13 @@ function renderVCC(){
 function getOverstayRows(){
   const now=new Date();
   return D.overstays.flatMap(pkg=>pkg.travelers.map(t=>({
-    'Package ID':pkg.pkgId,'DMC Name':pkg.dmc,'DMC Email':pkg.dmcEmail,'DMC Phone':pkg.dmcPhone,
-    'City of Stay':pkg.city,'Hotel':pkg.hotel,'Visa Type':pkg.visaType,
-    'Traveler ID':t.id,'Traveler Name':t.name,
-    'Nationality':t.nat.replace(/[\u{1F1E0}-\u{1F1FF}]{2}/gu,'').trim(),
-    'Passport No.':t.passport,'Entry Date':t.entry,'Visa Expiry Date':t.visaExp,
-    'Days Overstayed':t.overDays,
-    'Severity':t.overDays>=10?'Critical':t.overDays>=5?'High':'Moderate',
+    'Package ID':pkg.PACKAGE_ID,'DMC Name':pkg.DMC_NAME_EN,'DMC Email':pkg.DMC_EMAIL,'DMC Phone':pkg.DMC_PHONE,
+    'City of Stay':pkg.CITY,'Hotel':pkg.HOTEL_NAME,'Visa Type':pkg.VISA_TYPE,
+    'Traveler ID':t.APPLICATION_NO,'Traveler Name':t.NAME,
+    'Nationality':t.NATIONALITY_NAME.replace(/[\u{1F1E0}-\u{1F1FF}]{2}/gu,'').trim(),
+    'Passport No.':t.PASSPORTNUMBER,'Entry Date':t.ARRIVAL_FLIGHT_DATE,'Visa Expiry Date':t.VISA_EXPIRYDATE,
+    'Days Overstayed':t.OVERSTAY_DAYS,
+    'Severity':t.OVERSTAY_DAYS>=10?'Critical':t.OVERSTAY_DAYS>=5?'High':'Moderate',
     'Action Required':'Contact DMC to locate traveler and arrange immediate departure',
     'Export Timestamp':now.toISOString().replace('T',' ').substring(0,19),
   })));
@@ -1696,9 +1703,9 @@ window.rFeeBreak=()=>{
 window.rDmcPkg=()=>{
   dc('cDmcPkg');const ctx=document.getElementById('cDmcPkg');if(!ctx)return;
   const cols=[B.g1,B.t2,B.p2,B.w,B.i,B.r,B.g3];
-  charts.cDmcPkg=new Chart(ctx,{type:'bar',data:{labels:D.dmcs.map(d=>d.n),datasets:[
-    {label:'Submitted',data:D.dmcs.map(d=>d.pkgs),backgroundColor:cols.map(c=>hexA(c,.18)),borderColor:cols,borderWidth:2,borderRadius:5,borderSkipped:false},
-    {label:'Completed',data:D.dmcs.map(d=>d.done),backgroundColor:cols.map(c=>hexA(c,.55)),borderColor:cols,borderWidth:0,borderRadius:5,borderSkipped:false},
+  charts.cDmcPkg=new Chart(ctx,{type:'bar',data:{labels:D.dmcs.map(d=>d.DMC_NAME_EN),datasets:[
+    {label:'Submitted',data:D.dmcs.map(d=>d.PACKAGES_COUNT),backgroundColor:cols.map(c=>hexA(c,.18)),borderColor:cols,borderWidth:2,borderRadius:5,borderSkipped:false},
+    {label:'Completed',data:D.dmcs.map(d=>d.COMPLETED_COUNT),backgroundColor:cols.map(c=>hexA(c,.55)),borderColor:cols,borderWidth:0,borderRadius:5,borderSkipped:false},
   ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index'},
     plugins:{legend:{display:true,labels:{color:'#3A5E52',boxWidth:10,boxHeight:10,borderRadius:3}},tooltip:TT},
     scales:{x:{grid:{display:false},ticks:{...TK,maxRotation:30},border:BD},y:{grid:GR,ticks:TK,border:BD}}}});
@@ -1707,7 +1714,7 @@ window.rDmcPkg=()=>{
 window.rDmcRev=()=>{
   dc('cDmcRev');const ctx=document.getElementById('cDmcRev');if(!ctx)return;
   const cols=[B.g1,B.t2,B.p2,B.w,B.i,B.r,B.g3];
-  charts.cDmcRev=new Chart(ctx,{type:'doughnut',data:{labels:D.dmcs.map(d=>d.n),datasets:[{data:[1240,1040,930,760,610,460,290],backgroundColor:cols,borderWidth:3,borderColor:'#fff'}]},
+  charts.cDmcRev=new Chart(ctx,{type:'doughnut',data:{labels:D.dmcs.map(d=>d.DMC_NAME_EN),datasets:[{data:[1240,1040,930,760,610,460,290],backgroundColor:cols,borderWidth:3,borderColor:'#fff'}]},
   options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
     plugins:{legend:{display:true,position:'right',labels:{color:'#3A5E52',boxWidth:10,boxHeight:10,borderRadius:3,padding:10,font:{size:10.5}}},tooltip:TT}}});
 };
@@ -1746,7 +1753,7 @@ window.rHotels=()=>{
   dc('cHotels');const ctx=document.getElementById('cHotels');if(!ctx)return;
   const cols=[B.g1,B.g2,B.g3,B.t1,B.t2,B.t3,B.p1,B.p2,B.w,B.i];
   charts.cHotels=new Chart(ctx,{type:'bar',
-    data:{labels:D.hotels.map(h=>h.n),datasets:[{data:D.hotels.map(h=>h.pkgs),backgroundColor:cols.map(c=>hexA(c,.75)),borderColor:cols,borderWidth:1.5,borderRadius:5,borderSkipped:false}]},
+    data:{labels:D.hotels.map(h=>h.HOTEL_NAME),datasets:[{data:D.hotels.map(h=>h.PACKAGES_COUNT),backgroundColor:cols.map(c=>hexA(c,.75)),borderColor:cols,borderWidth:1.5,borderRadius:5,borderSkipped:false}]},
   options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
     plugins:{tooltip:{...TT,callbacks:{label:c=>` ${c.parsed.x} packages`}}},
     scales:{x:{grid:GR,ticks:TK,border:BD},y:{grid:{display:false},ticks:{color:'#3A5E52',font:{size:10.5}},border:BD}}}});
@@ -1756,7 +1763,7 @@ window.rCarriers=()=>{
   dc('cCarriers');const ctx=document.getElementById('cCarriers');if(!ctx)return;
   const cols=[B.g1,B.t2,B.p2,B.w,B.g3,B.i,B.r];
   charts.cCarriers=new Chart(ctx,{type:'bar',
-    data:{labels:D.carriers.map(c=>c.n),datasets:[{data:D.carriers.map(c=>c.pkgs),backgroundColor:cols.map(c=>hexA(c,.75)),borderColor:cols,borderWidth:1.5,borderRadius:5,borderSkipped:false}]},
+    data:{labels:D.carriers.map(c=>c.CARRIER_NAME),datasets:[{data:D.carriers.map(c=>c.PACKAGES_COUNT),backgroundColor:cols.map(c=>hexA(c,.75)),borderColor:cols,borderWidth:1.5,borderRadius:5,borderSkipped:false}]},
   options:{responsive:true,maintainAspectRatio:false,plugins:{tooltip:{...TT,callbacks:{label:c=>` ${c.parsed.y} packages`}}},
     scales:{x:{grid:{display:false},ticks:{...TK,maxRotation:30,font:{size:10}},border:BD},y:{grid:GR,ticks:TK,border:BD}}}});
 };
@@ -1765,10 +1772,10 @@ window.rInsurers=()=>{
   dc('cInsurers');const ctx=document.getElementById('cInsurers');if(!ctx)return;
   const cols=[B.g1,B.t2,B.p2,B.w,B.i,B.g3];
   charts.cInsurers=new Chart(ctx,{type:'doughnut',
-    data:{labels:D.insurers.map(i=>i.n),datasets:[{data:D.insurers.map(i=>i.policies),backgroundColor:cols,borderWidth:3,borderColor:'#fff'}]},
+    data:{labels:D.insurers.map(i=>i.INSURER_NAME),datasets:[{data:D.insurers.map(i=>i.POLICIES_COUNT),backgroundColor:cols,borderWidth:3,borderColor:'#fff'}]},
   options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
     plugins:{legend:{display:true,position:'right',labels:{color:'#3A5E52',boxWidth:10,boxHeight:10,borderRadius:3,padding:10,font:{size:10.5}}},
-    tooltip:{...TT,callbacks:{label:c=>` ${c.parsed.toLocaleString()} policies (${D.insurers[c.dataIndex].pct}%)`}}}}});
+    tooltip:{...TT,callbacks:{label:c=>` ${c.parsed.toLocaleString()} policies (${D.insurers[c.dataIndex].PCT}%)`}}}}});
 };
 
 window.rPkgComp=()=>{
