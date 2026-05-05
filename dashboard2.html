@@ -1096,26 +1096,12 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
 
   <div class="sdiv"><span><span class="en-text">Cancellation Analytics</span><span class="ar-text">تحليلات الإلغاء</span></span></div>
   <div class="kpi-grid" style="margin-bottom:12px">
-    <div class="kpi kv-p" style="grid-column:span 2">
-      <div class="kpi-top"><div class="kpi-icon">📦</div><div class="kpi-label-en en-text" style="font-weight:700">Cancellations</div></div>
-      <div style="font-size:10.5px;color:var(--tx3);margin:4px 0 8px;font-style:italic">COUNT(*) FROM VISA_APP_CANCELLATION — package-level rows have APPLICATION_NO = NULL, traveller-level rows have APPLICATION_NO set</div>
-      <div style="display:flex;gap:14px;flex-wrap:wrap">
-        <div style="flex:1;min-width:90px">
-          <div class="kpi-val" id="kCanTotal">156</div>
-          <div class="kpi-label-en en-text" style="font-size:11px">Total rows</div>
-          <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace">COUNT(*) FROM VISA_APP_CANCELLATION</div>
-        </div>
-        <div style="flex:1;min-width:90px">
-          <div class="kpi-val" id="kCanPkg">87</div>
-          <div class="kpi-label-en en-text" style="font-size:11px">Package-level rows</div>
-          <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace">WHERE APPLICATION_NO IS NULL</div>
-        </div>
-        <div style="flex:1;min-width:90px">
-          <div class="kpi-val" id="kCanTrav">69</div>
-          <div class="kpi-label-en en-text" style="font-size:11px">Traveller-level rows</div>
-          <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace">WHERE APPLICATION_NO IS NOT NULL</div>
-        </div>
-      </div>
+    <div class="kpi kv-p">
+      <div class="kpi-top"><div class="kpi-icon">📦</div></div>
+      <div class="kpi-val" id="kCanTotal">156</div>
+      <div class="kpi-label-en en-text">Package Cancellations</div>
+      <div class="kpi-label-ar">إلغاء الباقات</div>
+      <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace;margin-top:4px">COUNT(*) FROM VISA_APP_CANCELLATION</div>
     </div>
     <div class="kpi kv-r"><div class="kpi-top"><div class="kpi-icon">📉</div></div><div class="kpi-val">3.2%</div><div class="kpi-label-en en-text">Overall Cancel Rate</div><div class="kpi-label-ar">معدل الإلغاء</div></div>
     <div class="kpi kv-t"><div class="kpi-top"><div class="kpi-icon">⏱️</div></div><div class="kpi-val">14h</div><div class="kpi-label-en en-text">Avg. Cancel Time</div><div class="kpi-label-ar">متوسط وقت الإلغاء</div></div>
