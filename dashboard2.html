@@ -862,12 +862,20 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
     <div class="card"><div class="card-hdr"><div><div class="card-ttl-en en-text">Revenue Trend — Monthly (SAR)</div><div class="card-ttl-ar">الإيرادات الشهرية</div></div></div><div class="ch-lg"><canvas id="cRev"></canvas></div></div>
     <div class="card">
       <div class="card-hdr"><div><div class="card-ttl-en en-text">Government Fees Breakdown</div><div class="card-ttl-ar">تفصيل الرسوم الحكومية</div></div></div>
+      <div style="font-size:10.5px;color:var(--tx3);margin:-4px 0 8px;font-style:italic">Static UI grouping — source: TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT</div>
       <div class="ftbl-wrap">
         <table><thead><tr>
           <th><span class="en-text">Fee Type</span><span class="ar-text">نوع الرسم</span></th>
           <th><span class="en-text">Per</span><span class="ar-text">لكل</span></th>
           <th style="text-align:right"><span class="en-text">Collected</span><span class="ar-text">المحصل</span></th>
-        </tr></thead><tbody id="feeTblEl"></tbody></table>
+          <th><span class="en-text">Source note</span><span class="ar-text">المصدر</span></th>
+        </tr></thead><tbody id="feeTblEl"></tbody>
+        <tfoot><tr>
+          <td colspan="2" style="font-weight:700;color:var(--tx2)"><span class="en-text">Total Collected (YTD)</span><span class="ar-text">الإجمالي</span></td>
+          <td class="fee-amt" style="font-weight:800;color:var(--g1);font-size:14px">5,204,430 SAR</td>
+          <td style="font-size:10px;color:var(--tx3);font-style:italic">UI label</td>
+        </tr></tfoot>
+        </table>
         <div class="fee-total">
           <span class="fee-total-lbl"><span class="en-text">Total Collected (YTD)</span><span class="ar-text">الإجمالي</span></span>
           <span class="fee-total-val">5,204,430 SAR</span>
@@ -918,6 +926,7 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
       <div><div class="card-ttl-en en-text">Recent Package Submissions</div><div class="card-ttl-ar">آخر الباقات المقدمة</div></div>
       <button class="btn-ghost" style="font-size:11px">⬇ <span class="en-text">Export</span><span class="ar-text">تصدير</span></button>
     </div>
+    <div style="font-size:10.5px;color:var(--tx3);margin:-4px 0 8px;font-style:italic">VISA_APP_INSURANCE has no provider/issuer name column — POLICY_NUMBER, POLICY_STATUS, POLICY_URL only</div>
     <div class="tbl-wrap"><table class="ptbl">
       <thead><tr>
         <th><span class="en-text">Package ID</span><span class="ar-text">رقم الباقة</span></th>
@@ -930,7 +939,7 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
         <th><span class="en-text">Days</span><span class="ar-text">الأيام</span></th>
         <th><span class="en-text">Dep. Carrier</span><span class="ar-text">ناقل الذهاب</span></th>
         <th><span class="en-text">Arr. Carrier</span><span class="ar-text">ناقل العودة</span></th>
-        <th><span class="en-text">Insurer</span><span class="ar-text">شركة التأمين</span></th>
+        <th><span class="en-text">Insurer</span><span class="ar-text">شركة التأمين</span> <span style="display:inline-block;font-size:9px;font-weight:700;color:var(--w);background:rgba(181,106,0,.12);padding:1px 5px;border-radius:8px;margin-left:3px;letter-spacing:.2px" title="Derived — VISA_APP_INSURANCE has no provider/issuer name column">★ derived</span></th>
         <th><span class="en-text">Hotel Price</span><span class="ar-text">سعر الفندق</span></th>
         <th><span class="en-text">Flight Price</span><span class="ar-text">سعر الطيران</span></th>
         <th><span class="en-text">Visa Fees</span><span class="ar-text">رسوم التأشيرة</span></th>
@@ -1003,12 +1012,13 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
       <div><div class="card-ttl-en en-text">Active DMC Registry</div><div class="card-ttl-ar">سجل الشركات النشطة</div></div>
       <div class="card-badge">47 active</div>
     </div>
+    <div style="font-size:10.5px;color:var(--tx3);margin:-4px 0 8px;font-style:italic">"City" column removed — DMC table has no city field, only COUNTRY_CODE</div>
     <div class="tbl-wrap">
       <table class="ptbl">
         <thead><tr>
           <th><span class="en-text">Rank</span><span class="ar-text">الترتيب</span></th>
           <th><span class="en-text">DMC Name</span><span class="ar-text">الشركة</span></th>
-          <th><span class="en-text">City</span><span class="ar-text">المدينة</span></th>
+          <th><span class="en-text">Country</span><span class="ar-text">الدولة</span></th>
           <th><span class="en-text">Packages</span><span class="ar-text">الباقات</span></th>
           <th><span class="en-text">Completed</span><span class="ar-text">مكتملة</span></th>
           <th><span class="en-text">Completion %</span><span class="ar-text">نسبة الإكمال</span></th>
@@ -1086,8 +1096,27 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
 
   <div class="sdiv"><span><span class="en-text">Cancellation Analytics</span><span class="ar-text">تحليلات الإلغاء</span></span></div>
   <div class="kpi-grid" style="margin-bottom:12px">
-    <div class="kpi kv-p"><div class="kpi-top"><div class="kpi-icon">📦</div></div><div class="kpi-val">87</div><div class="kpi-label-en en-text">Package Cancellations</div><div class="kpi-label-ar">إلغاء باقات</div></div>
-    <div class="kpi kv-w"><div class="kpi-top"><div class="kpi-icon">🧍</div></div><div class="kpi-val">69</div><div class="kpi-label-en en-text">Traveler Cancellations</div><div class="kpi-label-ar">إلغاء مسافرين</div></div>
+    <div class="kpi kv-p" style="grid-column:span 2">
+      <div class="kpi-top"><div class="kpi-icon">📦</div><div class="kpi-label-en en-text" style="font-weight:700">Cancellations</div></div>
+      <div style="font-size:10.5px;color:var(--tx3);margin:4px 0 8px;font-style:italic">COUNT(*) FROM VISA_APP_CANCELLATION — package-level rows have APPLICATION_NO = NULL, traveller-level rows have APPLICATION_NO set</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:90px">
+          <div class="kpi-val" id="kCanTotal">156</div>
+          <div class="kpi-label-en en-text" style="font-size:11px">Total rows</div>
+          <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace">COUNT(*) FROM VISA_APP_CANCELLATION</div>
+        </div>
+        <div style="flex:1;min-width:90px">
+          <div class="kpi-val" id="kCanPkg">87</div>
+          <div class="kpi-label-en en-text" style="font-size:11px">Package-level rows</div>
+          <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace">WHERE APPLICATION_NO IS NULL</div>
+        </div>
+        <div style="flex:1;min-width:90px">
+          <div class="kpi-val" id="kCanTrav">69</div>
+          <div class="kpi-label-en en-text" style="font-size:11px">Traveller-level rows</div>
+          <div style="font-size:9.5px;color:var(--tx3);font-family:'JetBrains Mono',ui-monospace,monospace">WHERE APPLICATION_NO IS NOT NULL</div>
+        </div>
+      </div>
+    </div>
     <div class="kpi kv-r"><div class="kpi-top"><div class="kpi-icon">📉</div></div><div class="kpi-val">3.2%</div><div class="kpi-label-en en-text">Overall Cancel Rate</div><div class="kpi-label-ar">معدل الإلغاء</div></div>
     <div class="kpi kv-t"><div class="kpi-top"><div class="kpi-icon">⏱️</div></div><div class="kpi-val">14h</div><div class="kpi-label-en en-text">Avg. Cancel Time</div><div class="kpi-label-ar">متوسط وقت الإلغاء</div></div>
   </div>
@@ -1195,13 +1224,13 @@ const D = {
   ],
   /* Keys mirror DMC + PACKAGE_MASTER columns */
   dmcs:[
-    {DMC_NAME_EN:'Almosafer Travel',CITY:'Riyadh', PACKAGES_COUNT:847,COMPLETED_COUNT:811,REVENUE:'1.24M',STATUS:'active'},
-    {DMC_NAME_EN:'Seera Group',     CITY:'Riyadh', PACKAGES_COUNT:712,COMPLETED_COUNT:698,REVENUE:'1.04M',STATUS:'active'},
-    {DMC_NAME_EN:'Wego',            CITY:'Riyadh', PACKAGES_COUNT:634,COMPLETED_COUNT:601,REVENUE:'0.93M',STATUS:'active'},
-    {DMC_NAME_EN:'Tajawal',         CITY:'Jeddah', PACKAGES_COUNT:521,COMPLETED_COUNT:499,REVENUE:'0.76M',STATUS:'active'},
-    {DMC_NAME_EN:'Flyin.com',       CITY:'Jeddah', PACKAGES_COUNT:418,COMPLETED_COUNT:390,REVENUE:'0.61M',STATUS:'active'},
-    {DMC_NAME_EN:'Al Tayyar Group', CITY:'Riyadh', PACKAGES_COUNT:312,COMPLETED_COUNT:298,REVENUE:'0.46M',STATUS:'active'},
-    {DMC_NAME_EN:'Abercrombie KSA', CITY:'AlUla',  PACKAGES_COUNT:201,COMPLETED_COUNT:187,REVENUE:'0.29M',STATUS:'active'},
+    {DMC_NAME_EN:'Almosafer Travel',COUNTRY_CODE:'SAU', PACKAGES_COUNT:847,COMPLETED_COUNT:811,REVENUE:'1.24M',STATUS:'active'},
+    {DMC_NAME_EN:'Seera Group',     COUNTRY_CODE:'SAU', PACKAGES_COUNT:712,COMPLETED_COUNT:698,REVENUE:'1.04M',STATUS:'active'},
+    {DMC_NAME_EN:'Wego',            COUNTRY_CODE:'ARE', PACKAGES_COUNT:634,COMPLETED_COUNT:601,REVENUE:'0.93M',STATUS:'active'},
+    {DMC_NAME_EN:'Tajawal',         COUNTRY_CODE:'ARE', PACKAGES_COUNT:521,COMPLETED_COUNT:499,REVENUE:'0.76M',STATUS:'active'},
+    {DMC_NAME_EN:'Flyin.com',       COUNTRY_CODE:'SAU', PACKAGES_COUNT:418,COMPLETED_COUNT:390,REVENUE:'0.61M',STATUS:'active'},
+    {DMC_NAME_EN:'Al Tayyar Group', COUNTRY_CODE:'SAU', PACKAGES_COUNT:312,COMPLETED_COUNT:298,REVENUE:'0.46M',STATUS:'active'},
+    {DMC_NAME_EN:'Abercrombie KSA', COUNTRY_CODE:'SAU', PACKAGES_COUNT:201,COMPLETED_COUNT:187,REVENUE:'0.29M',STATUS:'active'},
   ],
   /* DMC.STATUS != 'active' joined with OTA_DMC_CREDITCARDDETAILS */
   inactiveDmcs:[
@@ -1417,6 +1446,7 @@ function renderFeeTable(){
       <td><div class="fee-en en-text">${f.en}</div><div class="fee-ar">${f.ar}</div></td>
       <td style="font-size:10px;color:var(--tx3)">${f.per}</td>
       <td class="fee-amt">${f.tot==='0'?'—':f.tot+' SAR'}</td>
+      <td style="font-size:10px;color:var(--tx3);font-style:italic">UI label</td>
     </tr>`).join('');
 }
 
@@ -1438,7 +1468,7 @@ function renderActiveDmcTable(){
     return `<tr>
       <td style="text-align:center;font-size:15px">${rk[i]||i+1}</td>
       <td class="ptbl-val">${d.DMC_NAME_EN}</td>
-      <td class="ptbl-td">${d.CITY}</td>
+      <td class="ptbl-td">${d.COUNTRY_CODE}</td>
       <td class="ptbl-td" style="text-align:center;font-weight:700;color:var(--g1)">${d.PACKAGES_COUNT.toLocaleString()}</td>
       <td class="ptbl-td" style="text-align:center;color:var(--s-success)">${d.COMPLETED_COUNT.toLocaleString()}</td>
       <td style="min-width:120px">
@@ -1488,7 +1518,7 @@ function renderPkgTable(){
       <td class="ptbl-td" style="text-align:center">${r.PACKAGE_DURATION}d</td>
       <td class="ptbl-td" style="font-size:11px">${r.DEPARTURE_CARRIER}</td>
       <td class="ptbl-td" style="font-size:11px">${r.ARRIVAL_CARRIER}</td>
-      <td class="ptbl-td" style="font-size:11px;color:var(--p2)">${r.INSURANCE_PROVIDER}</td>
+      <td class="ptbl-td" style="font-size:11px;color:var(--p2)">${r.INSURANCE_PROVIDER} <span style="color:var(--w);font-weight:700" title="Derived — not a DB column">★</span></td>
       <td class="ptbl-val" style="color:var(--t1)">${r.HOTEL_PRICE} SAR</td>
       <td class="ptbl-val" style="color:var(--p2)">${r.FLIGHT_PRICE} SAR</td>
       <td style="font-size:11px;font-weight:600;color:var(--s-info)">${r.VISA_FEE} SAR</td>
