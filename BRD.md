@@ -5,9 +5,16 @@
 |---|---|
 | Document Title | BRD — Visa by Package Operations Dashboard |
 | Owner | Saudi Arabia Ministry of Tourism |
-| Version | 1.0 |
-| Date | 2026-05-04 |
+| Version | 1.1 |
+| Date | 2026-05-05 |
 | Status | Draft |
+
+### Revision History
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-05-04 | Initial BRD |
+| 1.1 | 2026-05-05 | Added Section 8.1 (MTOTAeVisa Data Model) and KPI source-column mapping; aligned data sources with `MTOTAeVisa_DatabaseDetails.xlsx` (OTAEVisa_ESB, OTAEVisa_App_Attachments, OTAEVisa_ESB_Logs) |
 
 ---
 
@@ -125,14 +132,69 @@ The dashboard consolidates data from MOFA, the Insurance Authority (IA), the Min
 
 ## 8. Data Sources & Integrations
 
+### 8.1 MTOTAeVisa Authoritative Database
+
+The dashboard is now bound to the **MTOTAeVisa** platform's three operational databases (per `MTOTAeVisa_DatabaseDetails.xlsx`):
+
+| Database | Purpose | Tables (count) |
+|---|---|---|
+| `OTAEVisa_ESB` | Core operational data: packages, visas, DMCs, payments, masters | 50 |
+| `OTAEVisa_App_Attachments` | Document storage for visa applications | 1 (`APPLICATION_ATTACHMENT`) |
+| `OTAEVisa_ESB_Logs` | API access, transaction, and tourism package logs | 3 (`OTA_ACCESS_LOG`, `OTA_TOURISMPACKAGELOG`, `TRANSACTIONLOG`) |
+
+**Key tables in `OTAEVisa_ESB`** (selected):
+- Package & traveler: `PACKAGE_MASTER`, `VISA_APP_PERSONALDETAILS`, `VISA_APP_PASSPORTRAVEL`, `VISA_APP_PACKAGE_REQUEST_DATA`, `VISA_APP_ACCOMPANYING_SERVICE_DATA`, `DEPENDENTDATA`
+- Accommodation & travel: `VISA_APP_ACCOMMODATION_DATA`, `VISA_APP_FLIGHT_DATA`, `HOTEL`, `DEPARTURE_CARRIER`, `ARRIVAL_CARRIER`, `TRANSPORTER`
+- Visa & insurance: `VISA_APP_MOFA`, `VISA_APP_MOFA_QUESTIONNAIRE_DATA`, `VISA_APP_INSURANCE`, `VISA_APP_CANCELLATION`
+- Partners & auth: `DMC`, `OTA_MASTER`, `OTA_DMC_AUTHORIZATION`, `OTA_DMC_CREDITCARDDETAILS`, `OTA_API_CREDENTIAL`
+- Payments: `TOURISM_PACKAGE_PAYMENT_REQUEST`, `TOURISM_PACKAGE_PAYMENT_CONFIRMATION`, `SERVICE_TYPE`
+- Reference / masters: `NATIONALITY`, `CITY`, `ENTRY_PORT`, `EXIT_PORT`, `EMBASSY_CODE`, `ADDRESS_COUNTRY`, `BIRTH_COUNTRY`, `ISSUE_COUNTRY`, `PASSPORT_TYPE`, `PASSPORT_ISSUE_COUNTRY`, `PASSPORT_ISSUE_PLACE`, `PURPOSE`, `RELIGION`, `GENDER`, `TITLE`, `SOCIAL_STATUS`, `COMPANION_TYPE`, `REQUEST_TYPE`, `DEGREE`, `API`
+- Settings & policy: `ESB_SETTING`, `ESB_SITE_SETTINGS`, `DISCLAIMER`, `PRIVACYPOLICY_EN`, `PRIVACYPOLICY_AR`
+- Staging: `OTA_APPLICATION_PROCESSING_STG`
+
+### 8.2 Dashboard Field → Database Column Mapping
+
+| Dashboard Object | Source Table.Column |
+|---|---|
+| Package ID | `PACKAGE_MASTER.PACKAGE_ID` |
+| Package Status | `PACKAGE_MASTER.PACKAGE_STATUS` |
+| Total Travelers | `PACKAGE_MASTER.TOTAL_TRAVELERS_COUNT` |
+| Total Package Price | `PACKAGE_MASTER.TOTAL_PACKAGE_PRICE` |
+| Submission Timestamp | `PACKAGE_MASTER.CREATEDTIMESTAMP` |
+| DMC | `DMC.DMC_NAME_EN` (via `PACKAGE_MASTER.DMC_RECORDID`) |
+| DMC Status | `DMC.STATUS`, `DMC.IS_QUALIFIED` |
+| Nationality | `VISA_APP_PERSONALDETAILS.NATIONALITY` → `NATIONALITY.NATIONALITY_NAME` |
+| City of Stay | `VISA_APP_ACCOMMODATION_DATA.CITY` → `CITY.CITY_NAME` |
+| Hotel Class (Star) | `VISA_APP_ACCOMMODATION_DATA.HOTEL_CLASSIFICATION` |
+| Hotel Name | `HOTEL.HOTEL_NAME` (via `VISA_APP_ACCOMMODATION_DATA.LICENSE_NO`) |
+| Hotel Price | `VISA_APP_ACCOMMODATION_DATA.HOTEL_PRICE` |
+| Package Duration | `VISA_APP_PACKAGE_REQUEST_DATA.PACKAGE_DURATION` |
+| Departure Carrier | `DEPARTURE_CARRIER.CARRIER_NAME` |
+| Arrival Carrier | `ARRIVAL_CARRIER.CARRIER_NAME` |
+| Flight Price | `VISA_APP_FLIGHT_DATA.FLIGHT_PRICE` |
+| Visa Issuance Fee | `TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT` (SERVICE_TYPE = visa issuance) |
+| Visa Processing Fee | `TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT` (SERVICE_TYPE = visa processing) |
+| Insurance Fee | `TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT` (SERVICE_TYPE = insurance policy) |
+| Insurance Provider | `VISA_APP_INSURANCE` provider field |
+| Visa Status / Expiry | `VISA_APP_MOFA.VISA_USAGE_STATUS`, `VISA_APP_MOFA.VISA_EXPIRYDATE` |
+| Validation Status | `PACKAGE_MASTER.VALIDATION_STATUS`, `OTA_APPLICATION_PROCESSING_STG.APP_STATUS` |
+| Cancellation Reason | `VISA_APP_CANCELLATION.CANCELLATIONREASON`, `FE_CANCELLATION_STATUS`, `ERRORCODE` |
+| Entry / Arrival Date | `VISA_APP_FLIGHT_DATA.ARRIVAL_FLIGHT_DATE` |
+| Passport Number | `VISA_APP_PASSPORTRAVEL.PASSPORTNUMBER` |
+| VCC Card Status / Expiry | `OTA_DMC_CREDITCARDDETAILS.STATUS`, `EXPIRY_DATE`, `EXPIRY_REMINDER_COUNT` |
+| API Access Logs | `OTA_ACCESS_LOG`, `TRANSACTIONLOG`, `OTA_TOURISMPACKAGELOG` |
+| Application Attachments | `APPLICATION_ATTACHMENT` |
+
+### 8.3 External Integrations
+
 | System | Data Provided |
 |---|---|
-| MOFA | Visa issuance status, visa duration, rejection reasons |
-| Insurance Authority (IA) | Policy issuance, insurer mapping |
-| Ministry of Interior (MOI) | Entry/exit records, overstay flags |
-| DMC / OTA Booking Systems | Package submissions, hotel/flight pricing |
-| Payment Processors | Fee collection, payment status |
-| VCC Card Platform | Virtual card transaction and health telemetry |
+| MOFA | Visa issuance status, visa duration, rejection reasons (mirrored to `VISA_APP_MOFA`) |
+| Insurance Authority (IA) | Policy issuance, insurer mapping (mirrored to `VISA_APP_INSURANCE`) |
+| Ministry of Interior (MOI) | Entry/exit records, overstay flags (consumed via `ENTRY_PORT`, `EXIT_PORT`, `VISA_APP_MOFA`) |
+| DMC / OTA Booking Systems | Package submissions, hotel/flight pricing (`PACKAGE_MASTER`, `VISA_APP_*`) |
+| Payment Processors | Fee collection, payment status (`TOURISM_PACKAGE_PAYMENT_REQUEST/_CONFIRMATION`) |
+| VCC Card Platform | Virtual card transaction and health telemetry (`OTA_DMC_CREDITCARDDETAILS`) |
 
 ## 9. Key Metrics (KPI Catalog) — Definitions & Formulas
 
@@ -146,16 +208,16 @@ All sums apply the active filter context (date range, DMC, nationality, city, pa
 
 ### 9.2 Overview KPIs
 
-| KPI | Formula |
-|---|---|
-| Total Packages Submitted | `COUNT(p ∈ P WHERE p.status ≠ 'Draft')` |
-| Total Visas Issued | `SUM(p.travelers WHERE p.visa_status = 'Issued')` |
-| Total Fees Collected (SAR) | `SUM(p.gov_fees + p.processing_fees WHERE p.payment_status = 'Paid')` |
-| Insurance Policies Issued | `COUNT(policy WHERE policy.status = 'Issued' AND policy.package_id ∈ P)` |
-| Packages Pending | `COUNT(p ∈ P WHERE p.status ∈ {'Received','Validated','Fees Paid','Processing'})` |
-| Packages Rejected | `COUNT(p ∈ P WHERE p.status = 'Rejected')` |
-| Total DMCs | `COUNT(DISTINCT p.dmc_id WHERE p ∈ P)` |
-| Cancellation Rate (%) | `(Packages_Cancelled / Total_Packages_Submitted) × 100` |
+| KPI | Formula | Source |
+|---|---|---|
+| Total Packages Submitted | `COUNT(PACKAGE_MASTER.PACKAGE_ID WHERE PACKAGE_STATUS ≠ 'Draft')` | `PACKAGE_MASTER` |
+| Total Visas Issued | `COUNT(VISA_APP_MOFA WHERE VISA_USAGE_STATUS = 'Issued')` | `VISA_APP_MOFA` |
+| Total Fees Collected (SAR) | `SUM(TOURISM_PACKAGE_PAYMENT_CONFIRMATION.AMOUNT)` | `TOURISM_PACKAGE_PAYMENT_CONFIRMATION` |
+| Insurance Policies Issued | `COUNT(VISA_APP_INSURANCE WHERE policy_status = 'Issued')` | `VISA_APP_INSURANCE` |
+| Packages Pending | `COUNT(PACKAGE_MASTER WHERE PACKAGE_STATUS ∈ {'Received','Validated','Fees Paid','Processing'})` | `PACKAGE_MASTER` |
+| Packages Rejected | `COUNT(PACKAGE_MASTER WHERE PACKAGE_STATUS = 'Rejected')` | `PACKAGE_MASTER` |
+| Total DMCs | `COUNT(DISTINCT PACKAGE_MASTER.DMC_RECORDID)` | `PACKAGE_MASTER ⨝ DMC` |
+| Cancellation Rate (%) | `COUNT(VISA_APP_CANCELLATION) / COUNT(PACKAGE_MASTER) × 100` | `VISA_APP_CANCELLATION` |
 
 ### 9.3 Packages & Financials KPIs
 
