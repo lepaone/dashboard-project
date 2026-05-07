@@ -600,9 +600,6 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
   <button class="nav-btn" onclick="showTab('visa-ins',this)">
     <span class="en-text">🛂 Visa & Insurance</span><span class="ar-text">🛂 التأشيرة والتأمين</span>
   </button>
-  <button class="nav-btn" onclick="showTab('dmc',this)">
-    <span class="en-text">🏢 DMC Performance</span><span class="ar-text">🏢 أداء الشركات</span>
-  </button>
   <button class="nav-btn" onclick="showTab('moi',this)">
     <span class="en-text">🚪 Entry & Cancellations</span><span class="ar-text">🚪 الدخول والإلغاء</span>
   </button>
@@ -980,20 +977,6 @@ body.ar .moi-card{border-left:none;border-right:3px solid var(--g1)}
   </div>
 </div>
 
-<!-- ════════ DMC ══════════════════════════════════════════ -->
-<div id="tab-dmc" class="section hidden">
-  <div class="kpi-grid" style="margin-bottom:12px">
-    <div class="kpi kv-g"><div class="kpi-top"><div class="kpi-icon">📦</div><div class="kpi-delta d-up">↑ 12%</div></div><div class="kpi-val">847</div><div class="kpi-label-en en-text">My Total Packages</div><div class="kpi-label-ar">إجمالي باقاتي</div></div>
-    <div class="kpi kv-g"><div class="kpi-top"><div class="kpi-icon">💰</div><div class="kpi-delta d-up">↑ 18%</div></div><div class="kpi-val">5.33M SAR</div><div class="kpi-label-en en-text">Total Revenue (Active DMCs)</div><div class="kpi-label-ar">إجمالي الإيرادات</div></div>
-  </div>
-  <div class="g23" style="margin-bottom:12px">
-    <div class="card"><div class="card-hdr"><div><div class="card-ttl-en en-text">DMC Leaderboard</div><div class="card-ttl-ar">تصنيف الشركات</div></div><div class="card-badge">Top 7</div></div><div class="dmc-list" id="dmcListEl"></div></div>
-    <div class="card"><div class="card-hdr"><div><div class="card-ttl-en en-text">Packages by DMC</div><div class="card-ttl-ar">الباقات حسب الشركة</div></div></div><div class="ch-lg"><canvas id="cDmcPkg"></canvas></div></div>
-  </div>
-  <div class="g2" style="margin-bottom:12px">
-    <div class="card"><div class="card-hdr"><div><div class="card-ttl-en en-text">Completion Rate by DMC</div><div class="card-ttl-ar">معدل الإكمال</div></div></div><div class="hbl" id="dmcCompEl"></div></div>
-  </div>
-</div>
 
 <!-- ════════ ENTRY & CANCELLATIONS ═══════════════════════ -->
 <div id="tab-moi" class="section hidden">
